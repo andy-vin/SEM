@@ -32,44 +32,47 @@ function cuEq() {
         return;
     }
 
-    var pi = 3.14;
+    var p = (3*a*c - b*b)/(3*a*a);
 
-    var f, x1, x2, x3, i = 0;
+    var q = (2*b*b*b - 9*a*b*c + 27*a*a*d)/(27*a*a*a);
 
-    var p = (3*a*c - (b*b)) / (3 * (a*a));
+    var roots;
 
-    var q = 2*((b*b*b) - 9*(a*b*c) + 27*(a*a) * d);
-
-    var s = ((q*q)/4) + ((p*p*p)/27);
-
-    if (q == 0){
-        f = pi / 2;
-    } else if (q < 0 ){
-        f = Math.atan((Math.sqrt(s)) / (q/2));
-    } else if (q > 0){
-        f = Math.atan((Math.sqrt(s)) / (q/2)) + pi;
+    function cuberoot(x) {
+        var y = Math.pow(Math.abs(x), 1/3);
+        return x < 0 ? -y : y;
+    }
+    // p = 0 -> t^3 = -q -> t = -q^1/3
+    if (Math.abs(p) < 1e-8) {
+        roots = [cuberoot(-q)];
+    // q = 0 -> t^3 + pt = 0 -> t(t^2+p)=0
+    } else if (Math.abs(q) < 1e-8) {
+        roots = [0].concat(p < 0 ? [Math.sqrt(-p), -Math.sqrt(-p)] : []);
+    } else {
+        var D = q*q/4 + p*p*p/27;
+        valDesc = "Discriminant = " + "<strong>" + D + "</strong><br />";
+        // D = 0 -> two roots
+        if (Math.abs(D) < 1e-8) {
+            roots = [-1.5*q/p, 3*q/p];
+        // Only one real root
+        } else if (D > 0) {
+            var u = cuberoot(-q/2 - Math.sqrt(D));
+            roots = [u - p/(3*u)];
+        // D < 0, three roots, but needs to use complex numbers/trigonometric solution
+        } else {
+            var u = 2*Math.sqrt(-p/3);
+            // D < 0 implies p < 0 and acos argument in [-1..1]
+            var t = Math.acos(3*q/p/u)/3;
+            var k = 2*Math.PI/3;
+            roots = [u*Math.cos(t), u*Math.cos(t-k), u*Math.cos(t-2*k)];
+        }
     }
 
-    if (s < 0){
-        valDesc = "Discriminant = <strong>" + s + "</strong><br />";
-        x1 = 2*Math.sqrt(-p/3) * Math.cos(f/3) - (b/(3*a));
-        x2 = 2*Math.sqrt(-p/3) * Math.cos((f/3) + ((2*pi)/3)) - (b/(3*a));
-        x3 = 2*Math.sqrt(-p/3) * Math.cos((f/3) + ((4*pi)/3)) - (b/(3*a));
-        valRoot = "Roots:<br />x<sub>1</sub> = " + x1 + ";<br />" + "x<sub>2</sub> = " + x2 +";<br />" + "x<sub>3</sub> = " + x3 + ";<br />";
-    } else if (s > 0){
-        valDesc = "Discriminant = <strong>" + s + "</strong><br />";
-        i = (Math.sqrt(3) / 2)* (Math.pow(((-q/2)+Math.sqrt(s)), 1/3) - Math.pow(((-q/2)-Math.sqrt(s)), 1/3));
-        x1 = Math.pow(((-q/2)+Math.sqrt(s)), 1/3) + Math.pow(((-q/2)-Math.pow(s,1/2)), 1/3) - (b/(3*a));
-        x2 = (-1/2) * (Math.pow(((-q/2)+Math.sqrt(s)), 1/3) + Math.pow(((-q/2)-Math.sqrt(s)), 1/3) - (b/(3*a))) + " +i *" + i;
-        x3 = (-1/2) * (Math.pow(((-q/2)+Math.sqrt(s)), 1/3) + Math.pow(((-q/2)-Math.sqrt(s)), 1/3) - (b/(3*a))) + " -i *" + i;
-        valRoot = "Roots:<br />x<sub>1</sub> = " + x1 + ";<br />" + "x<sub>2</sub> = " + x2 +";<br />" + "x<sub>3</sub> = " + x3 + ";<br />";
-    } else if( s == 0) {
-        valDesc = "Discriminant = <strong>0</strong><br />";
-        x1 =  2 * (Math.pow((-q/2),1/3) - (b/(3*a)));
-        valRoot = "Roots:<br>x<sub>1</sub> = x<sub>2</sub> = x<sub>3</sub> = <strong>" + x1+ "</strong>.";
+    for (var i = 0; i < roots.length; i++){
+        roots[i] -= b/(3*a);
+        valRoot = "Roots:<br>" + "x<sub>" + (i+1) + "</sub> = " + "<strong>" + roots[i] + "</strong><br />";
+        sol.innerHTML = valRoot;
     }
 
     desc.innerHTML = valDesc;
-
-    sol.innerHTML = valRoot;
 }

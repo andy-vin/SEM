@@ -290,7 +290,7 @@
                                 <br />Just enter the values of <strong>a</strong>,
                                 <strong>b</strong>
                                 and <strong>c</strong> below and press <strong>"solve"</strong>.</p>
-                            <form class="form-inline" data-toggle="validator" role="form" name="values">
+                            <form class="form-inline" data-toggle="validator" role="form" name="values" id="clf1">
                                 <div class="col-md-10 coall">
                                     <div class="form-group">
                                         <label id="sq_a">a</label>
@@ -317,8 +317,8 @@
                         <div class="co">
                             <div class="form-group">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i>Close page</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i>Clear</button>
-                            </div>
+                                <button type="button" class="btn btn-primary" data-dismiss="clear" onclick="$('#clf1')[0].reset(), document.getElementById('sqEqDesc').remove(), document.getElementById('sqEqSol').remove();"><i class="fa fa-times"></i>Clear</button>
+                        </div>
                         </div>
 
                         <!--</div>-->
@@ -353,7 +353,7 @@
                                 <br />Just enter the values of <strong>a</strong>,
                                 <strong>b</strong>
                                 and <strong>c</strong> below and press <strong>"solve"</strong>.</p>
-                            <form class="form-inline" data-toggle="validator" role="form" name="values_cu">
+                            <form class="form-inline" data-toggle="validator" role="form" name="values_cu" id="clf2">
                                 <div class="col-md-10 coall">
                                     <div class="form-group">
                                         <label id="cu_a_c">a</label>
@@ -382,7 +382,7 @@
                         <div class="co">
                             <div class="form-group">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i>Close page</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i>Clear</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="clear"><i class="fa fa-times" onclick="$('#clf2')[0].reset(), document.getElementById('cuEqDesc').remove(), document.getElementById('cuEqSol').remove();"></i>Clear</button>
                             </div>
                         </div>
 
@@ -414,7 +414,6 @@
     <!-- Solve equations -->
     <script type="text/javascript" src="js/square_equation_solve.js"></script>
     <script type="text/javascript" src="js/cubic_equation.js"></script>
-
 </body>
 
 </html>

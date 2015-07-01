@@ -3,7 +3,6 @@
  */
 function sqEq() {
     var a = document.getElementById("val_a").value;
-    //alert(typeof (a));
     var b = document.getElementById("val_b").value;
     var c = document.getElementById("val_c").value;
 

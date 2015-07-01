@@ -4,8 +4,6 @@
 
 function cuEq() {
     var a = document.getElementById("val_a_c").value;
-    //alert(typeof (a));
-    alert ('cubic');
     var b = document.getElementById("val_b_c").value;
     var c = document.getElementById("val_c_c").value;
     var d = document.getElementById("val_d_c").value;
